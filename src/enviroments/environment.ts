@@ -4,7 +4,8 @@
 
 export const environment = {
     production: false,
-    client_id: ''
+    client_id: '',
+    client_secret: '',
 };
 
 /*
@@ -15,7 +16,6 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
-
 
 /*
  Copyright Google LLC. All Rights Reserved.
