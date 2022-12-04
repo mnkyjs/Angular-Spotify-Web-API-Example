@@ -1,11 +1,22 @@
 import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { provideAutoSpy } from 'jest-auto-spies';
 import { AppComponent } from './app.component';
+import { AuthService } from './auth/auth.service';
+import { SpotifyService } from './services/spotify.service';
 
 describe('AppComponent', () => {
     beforeEach(async() => {
         await TestBed.configureTestingModule({
+            imports: [
+                RouterTestingModule,
+            ],
             declarations: [
                 AppComponent,
+            ],
+            providers: [
+                provideAutoSpy(SpotifyService),
+                provideAutoSpy(AuthService),
             ],
         }).compileComponents();
     });
@@ -14,17 +25,5 @@ describe('AppComponent', () => {
         const fixture = TestBed.createComponent(AppComponent);
         const app = fixture.componentInstance;
         expect(app).toBeTruthy();
-    });
-
-    it(`should have as title 'spotify'`, () => {
-        const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.componentInstance;
-    });
-
-    it('should render title', () => {
-        const fixture = TestBed.createComponent(AppComponent);
-        fixture.detectChanges();
-        const compiled = fixture.nativeElement as HTMLElement;
-        expect(compiled.querySelector('.content span')?.textContent).toContain('spotify app is running!');
     });
 });

@@ -25,3 +25,26 @@ export interface UserProfile {
     type: string;
     uri: string;
 }
+
+export const USER_PROFILE_EXAMPLE: UserProfile = {
+    country: '',
+    display_name: '',
+    email: '',
+    explicit_content: {
+        filter_enabled: false,
+        filter_locked: false,
+    },
+    external_urls: {
+        spotify: '',
+    },
+    followers: {
+        href: '',
+        total: 1,
+    },
+    href: '',
+    id: '',
+    images: [],
+    product: '',
+    type: '',
+    uri: '',
+};

@@ -44,7 +44,6 @@ export class AppComponent implements OnDestroy {
 
     private initAuth() {
         if (!window.location.hash) {
-            console.log(window.location.hash);
             this.redirectToAuthorize();
         }
 

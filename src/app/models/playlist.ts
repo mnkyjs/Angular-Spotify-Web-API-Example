@@ -1,4 +1,4 @@
-import { Image } from './userProfile';
+import { Image, USER_PROFILE_EXAMPLE } from './userProfile';
 
 export interface ExternalUrls {
     spotify: string;
@@ -48,3 +48,34 @@ export interface Playlist {
     type: string;
     uri: string;
 }
+
+export const PLAYLIST_EXAMPLE: Playlist = {
+    collaborative: false,
+    description: '',
+    external_urls: {
+        spotify: '',
+    },
+    followers: {
+        total: 1,
+        href: '',
+    },
+    href: '',
+    id: '',
+    images: [],
+    name: '',
+    owner: USER_PROFILE_EXAMPLE,
+    public: false,
+    snapshot_id: '',
+    tracks: {
+        href: '',
+        items: [],
+        limit: 20,
+        next: '',
+        offset: 10,
+        previous: '',
+        total: 20,
+    },
+    type: '',
+    uri: '',
+
+};

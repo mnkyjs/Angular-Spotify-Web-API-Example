@@ -19,13 +19,13 @@ export class AuthService {
     constructor(private spotifyService: SpotifyService) { }
 
     getUser() {
-        this.spotifyService.getMe(this._accessToken.getValue()).subscribe({
+        return this.spotifyService.getMe().subscribe({
             next: (user: UserProfile) => this._currentUser.next(user),
         });
     }
 
     getAccessToken() {
-        this._accessToken.getValue();
+        return this._accessToken.getValue();
     }
 
     setAccessToken(token: string) {
