@@ -19,6 +19,8 @@ describe('AppComponent', () => {
                 provideAutoSpy(AuthService),
             ],
         }).compileComponents();
+
+        console.error = jest.fn();
     });
 
     it('should create the app', () => {
