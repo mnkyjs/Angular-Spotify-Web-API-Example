@@ -9,5 +9,6 @@
 </ng-container>
 
 <ng-container *ngFor="let playlist of playlists$ | async">
-    {{ playlist | json }}
+    {{ playlist.name  }}
+    <br>
 </ng-container>

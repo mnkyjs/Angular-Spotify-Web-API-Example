@@ -34,8 +34,7 @@ export class AppComponent implements OnDestroy {
 
     redirectToAuthorize() {
         const spotifyAuthorize = new SpotifyAuthorize();
-        const url = spotifyAuthorize.createAuthorizeURL();
-        window.location.href = url;
+        window.location.href = spotifyAuthorize.createAuthorizeURL();
     }
 
     onGetPlaylist(id: string) {
