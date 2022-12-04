@@ -4,8 +4,8 @@
 
 export const environment = {
     production: false,
-    client_id: '',
-    client_secret: '',
+    client_id: 'CLIENT_ID',
+    baseURL: 'https://api.spotify.com/v1'
 };
 
 /*

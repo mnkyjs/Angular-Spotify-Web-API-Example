@@ -1,7 +1,13 @@
-<button (click)="onLoginIn()">Login</button>
+<ng-container *ngIf="user$ | async as user">
+    {{ user.display_name }}
+
+    <ng-container *ngIf="user">
+        <button (click)="onGetPlaylist(user.id)">
+            Load Playlist
+        </button>
+    </ng-container>
+</ng-container>
 
 <ng-container *ngFor="let playlist of playlists$ | async">
     {{ playlist | json }}
 </ng-container>
-
-<ng-container *ngIf="user$ | async"></ng-container>

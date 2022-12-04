@@ -1,8 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { concatMap, EMPTY, Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { environment } from '../../enviroments/environment';
+import { Playlist } from '../models/playlist';
+import { UserProfile } from '../models/userProfile';
 
 export interface TokenResponse {
     access_token: string,
@@ -17,47 +18,27 @@ export interface TokenResponse {
 })
 export class SpotifyService {
 
-    jwtHelper = new JwtHelperService();
-
-    authenticationObject?: TokenResponse;
-
-    private readonly redirectUrl = window.location.origin + '/index.html';
-
     constructor(private httpClient: HttpClient) { }
 
-    authorize(): Observable<TokenResponse> {
+    authorize(): Observable<any> {
         const requestParams = new HttpParams()
-            .set('response_type', 'code')
             .set('scope', 'user-read-private user-read-email playlist-read-private')
-            .set('client_id', environment.client_id)
-            .set('redirect_uri', this.redirectUrl);
+            .set('client_id', environment.client_id);
 
-        return this.httpClient.get<{ code: string, state: any }>('https://accounts.spotify.com/authorize', { params: requestParams }).pipe(
-            concatMap(({ code }: { code: string, state: any }) => this.login(code)),
-            tap((authenticationObject: TokenResponse) => this.authenticationObject = authenticationObject),
-        );
+        return this.httpClient.get(
+            'http://localhost:3000/login',
+            { params: requestParams },
+        ).pipe(tap((link) => console.log(link)));
     }
 
-    login(code: string): Observable<TokenResponse> {
-        const form = new FormData();
-        form.append('code', code);
-        form.append('redirect_uri', this.redirectUrl);
-        form.append('grant_type', 'authorization_code');
-        return this.httpClient.post<TokenResponse>('https://accounts.spotify.com/api/token', form, {
-            headers: {
-                'Authorization': 'Basic ' + (
-                    new Buffer(environment.client_id + ':' + environment.client_secret).toString('base64')
-                ),
-            }, responseType: 'json',
-        });
+    getPlaylists(userId: string): Observable<Playlist[]> {
+        return this.httpClient.get<{ items: Playlist[] }>(`https://api.spotify.com/v1/users/${ userId }/playlists`)
+            .pipe(
+                map(({ items }: { items: Playlist[] }) => items),
+            );
     }
 
-    getPlaylists() {
-        const user_profile = this.jwtHelper.decodeToken(this.authenticationObject?.access_token);
-        console.log(user_profile);
-        if (this.authenticationObject) {
-            return this.httpClient.get(`https://api.spotify.com/v1/users/XXXXX/playlists`);
-        }
-        return EMPTY;
+    getMe(accessToken: string): Observable<UserProfile> {
+        return this.httpClient.get<UserProfile>(`${ environment.baseURL }/me`);
     }
 }
