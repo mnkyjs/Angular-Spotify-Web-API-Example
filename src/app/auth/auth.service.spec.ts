@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
-
+import { createSpyFromClass } from 'jest-auto-spies';
+import { SpotifyService } from '../services/spotify.service';
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
-  let service: AuthService;
+    let service: AuthService;
+    let spotifyService = createSpyFromClass(SpotifyService);
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(AuthService);
-  });
+    beforeEach(() => {
+        service = new AuthService(spotifyService);
+    });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
 });
